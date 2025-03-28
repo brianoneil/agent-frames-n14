@@ -3,15 +3,23 @@
 import { useState } from "react";
 import { Card } from "@/components/ui/card"
 import { 
-  Zap,
-  Code2,
-  FileText,
-  Image as ImageIcon,
-  VideoIcon,
-  MessageSquare,
+  Sparkles,
+  ClipboardList,
+  ListChecks,
+  Palette,
+  Presentation,
+  Wrench,
   X,
   LucideIcon,
-  Play
+  Play,
+  Bold,
+  Italic,
+  List,
+  ListOrdered,
+  Heading1,
+  Heading2,
+  Code,
+  Quote
 } from "lucide-react"
 import { AnimatedBanner } from "@/components/quick-hits/AnimatedBanner";
 import { SplitSection } from "@/components/quick-hits/SplitSection";
@@ -20,14 +28,56 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { motion } from "framer-motion";
 import { SpinningRings } from "@/components/ui/icons/SpinningRings";
+import ReactMarkdown from 'react-markdown';
+
+function IdeaCleanUp() {
+  const [ideaContent, setIdeaContent] = useState("");
+  const [refinedContent, setRefinedContent] = useState("");
+
+  return (
+    <SplitSection
+      title="Idea Clean Up"
+      controls={
+        <div className="flex flex-col h-full">
+          <Label className="mb-2">Your Idea</Label>
+          <div className="flex-1 min-h-0">
+            <Textarea
+              value={ideaContent}
+              onChange={(e) => setIdeaContent(e.target.value)}
+              className="h-full resize-none"
+              placeholder="Write your idea here..."
+            />
+          </div>
+        </div>
+      }
+      output={
+        <div className="space-y-4">
+          <Textarea 
+            readOnly 
+            placeholder="Refined idea will appear here..."
+            value={refinedContent}
+          />
+        </div>
+      }
+      generateButton={
+        <Button 
+          size="sm" 
+          className="rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600"
+        >
+          <Play className="h-4 w-4 mr-2" />
+          Generate
+        </Button>
+      }
+    />
+  );
+}
 
 interface QuickHitItem {
   icon: LucideIcon;
   title: string;
   description: string;
   gradient: string;
-  controls: React.ReactNode;
-  output: React.ReactNode;
+  component: React.ReactNode;
 }
 
 export default function QuickHitsPage() {
@@ -35,144 +85,210 @@ export default function QuickHitsPage() {
 
   const quickHits: QuickHitItem[] = [
     {
-      icon: Code2,
-      title: "Code Snippets",
-      description: "Generate code snippets and quick functions.",
+      icon: Sparkles,
+      title: "Idea Clean Up",
+      description: "Refine and polish your initial ideas into clear concepts.",
       gradient: "from-emerald-500 to-teal-500",
-      controls: (
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <Label>Programming Language</Label>
-            <Textarea placeholder="e.g., Python, JavaScript, TypeScript" />
-          </div>
-          <div className="space-y-2">
-            <Label>Function Description</Label>
-            <Textarea placeholder="Describe what the function should do" />
-          </div>
-        </div>
-      ),
-      output: (
-        <div className="space-y-4">
-          <Textarea 
-            readOnly 
-            placeholder="Generated code will appear here..."
-            className="font-mono"
-          />
-        </div>
-      )
+      component: <IdeaCleanUp />
     },
     {
-      icon: FileText,
-      title: "Quick Copy",
-      description: "Generate marketing copy and short texts.",
+      icon: ClipboardList,
+      title: "Idea to Build Plan",
+      description: "Transform your idea into a structured development plan.",
       gradient: "from-teal-500 to-amber-500",
-      controls: (
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <Label>Topic</Label>
-            <Textarea placeholder="What's the topic of your copy?" />
-          </div>
-          <div className="space-y-2">
-            <Label>Tone</Label>
-            <Textarea placeholder="e.g., Professional, Casual, Funny" />
-          </div>
-        </div>
-      ),
-      output: (
-        <div className="space-y-4">
-          <Textarea 
-            readOnly 
-            placeholder="Generated copy will appear here..."
-          />
-        </div>
+      component: (
+        <SplitSection
+          title="Idea to Build Plan"
+          controls={
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label>Project Overview</Label>
+                <Textarea placeholder="Describe your project idea" />
+              </div>
+              <div className="space-y-2">
+                <Label>Technical Requirements</Label>
+                <Textarea placeholder="Any specific technical needs or constraints?" />
+              </div>
+            </div>
+          }
+          output={
+            <div className="space-y-4">
+              <Textarea 
+                readOnly 
+                placeholder="Development plan will appear here..."
+              />
+            </div>
+          }
+          generateButton={
+            <Button 
+              size="sm" 
+              className="rounded-full bg-gradient-to-br from-teal-500 to-amber-500 hover:from-teal-600 hover:to-amber-600"
+            >
+              <Play className="h-4 w-4 mr-2" />
+              Generate
+            </Button>
+          }
+        />
       )
     },
     {
-      icon: ImageIcon,
-      title: "Image Ideas",
-      description: "Quick image prompts and concepts.",
+      icon: ListChecks,
+      title: "Idea to Feature List",
+      description: "Break down your idea into detailed feature specifications.",
       gradient: "from-amber-500 to-emerald-500",
-      controls: (
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <Label>Prompt Description</Label>
-            <Textarea placeholder="Describe the image concept" />
-          </div>
-        </div>
-      ),
-      output: (
-        <div className="space-y-4">
-          <Textarea 
-            readOnly 
-            placeholder="Generated image description will appear here..."
-          />
-        </div>
+      component: (
+        <SplitSection
+          title="Idea to Feature List"
+          controls={
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label>Product Description</Label>
+                <Textarea placeholder="Describe your product or service" />
+              </div>
+              <div className="space-y-2">
+                <Label>Core Functionality</Label>
+                <Textarea placeholder="What are the main things it should do?" />
+              </div>
+            </div>
+          }
+          output={
+            <div className="space-y-4">
+              <Textarea 
+                readOnly 
+                placeholder="Feature list will appear here..."
+              />
+            </div>
+          }
+          generateButton={
+            <Button 
+              size="sm" 
+              className="rounded-full bg-gradient-to-br from-amber-500 to-emerald-500 hover:from-amber-600 hover:to-emerald-600"
+            >
+              <Play className="h-4 w-4 mr-2" />
+              Generate
+            </Button>
+          }
+        />
       )
     },
     {
-      icon: VideoIcon,
-      title: "Video Scripts",
-      description: "Short video scripts and storyboards.",
+      icon: Palette,
+      title: "Design Help",
+      description: "Get guidance on UI/UX design and visual direction.",
       gradient: "from-emerald-500 to-teal-500",
-      controls: (
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <Label>Video Topic</Label>
-            <Textarea placeholder="What's the topic of your video?" />
-          </div>
-        </div>
-      ),
-      output: (
-        <div className="space-y-4">
-          <Textarea 
-            readOnly 
-            placeholder="Generated video script will appear here..."
-          />
-        </div>
+      component: (
+        <SplitSection
+          title="Design Help"
+          controls={
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label>Design Context</Label>
+                <Textarea placeholder="What are you trying to design?" />
+              </div>
+              <div className="space-y-2">
+                <Label>Style Preferences</Label>
+                <Textarea placeholder="Any specific style or brand guidelines?" />
+              </div>
+            </div>
+          }
+          output={
+            <div className="space-y-4">
+              <Textarea 
+                readOnly 
+                placeholder="Design recommendations will appear here..."
+              />
+            </div>
+          }
+          generateButton={
+            <Button 
+              size="sm" 
+              className="rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600"
+            >
+              <Play className="h-4 w-4 mr-2" />
+              Generate
+            </Button>
+          }
+        />
       )
     },
     {
-      icon: MessageSquare,
-      title: "Chat Replies",
-      description: "Professional response templates.",
+      icon: Presentation,
+      title: "Idea to Pitch Deck",
+      description: "Create compelling pitch deck content from your idea.",
       gradient: "from-teal-500 to-amber-500",
-      controls: (
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <Label>User Message</Label>
-            <Textarea placeholder="Type your message here..." />
-          </div>
-        </div>
-      ),
-      output: (
-        <div className="space-y-4">
-          <Textarea 
-            readOnly 
-            placeholder="Generated reply will appear here..."
-          />
-        </div>
+      component: (
+        <SplitSection
+          title="Idea to Pitch Deck"
+          controls={
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label>Business Idea</Label>
+                <Textarea placeholder="Describe your business idea" />
+              </div>
+              <div className="space-y-2">
+                <Label>Target Market</Label>
+                <Textarea placeholder="Who is your target market?" />
+              </div>
+            </div>
+          }
+          output={
+            <div className="space-y-4">
+              <Textarea 
+                readOnly 
+                placeholder="Pitch deck content will appear here..."
+              />
+            </div>
+          }
+          generateButton={
+            <Button 
+              size="sm" 
+              className="rounded-full bg-gradient-to-br from-teal-500 to-amber-500 hover:from-teal-600 hover:to-amber-600"
+            >
+              <Play className="h-4 w-4 mr-2" />
+              Generate
+            </Button>
+          }
+        />
       )
     },
     {
-      icon: Zap,
-      title: "Quick Ideas",
-      description: "Rapid brainstorming and ideation.",
+      icon: Wrench,
+      title: "Feature Refinement",
+      description: "Polish and improve existing feature specifications.",
       gradient: "from-amber-500 to-emerald-500",
-      controls: (
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <Label>Idea Description</Label>
-            <Textarea placeholder="Describe your idea" />
-          </div>
-        </div>
-      ),
-      output: (
-        <div className="space-y-4">
-          <Textarea 
-            readOnly 
-            placeholder="Generated idea will appear here..."
-          />
-        </div>
+      component: (
+        <SplitSection
+          title="Feature Refinement"
+          controls={
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label>Current Feature</Label>
+                <Textarea placeholder="Describe the feature you want to refine" />
+              </div>
+              <div className="space-y-2">
+                <Label>Improvement Goals</Label>
+                <Textarea placeholder="What aspects need improvement?" />
+              </div>
+            </div>
+          }
+          output={
+            <div className="space-y-4">
+              <Textarea 
+                readOnly 
+                placeholder="Refined feature will appear here..."
+              />
+            </div>
+          }
+          generateButton={
+            <Button 
+              size="sm" 
+              className="rounded-full bg-gradient-to-br from-amber-500 to-emerald-500 hover:from-amber-600 hover:to-emerald-600"
+            >
+              <Play className="h-4 w-4 mr-2" />
+              Generate
+            </Button>
+          }
+        />
       )
     }
   ];
@@ -208,20 +324,7 @@ export default function QuickHitsPage() {
       )}
 
       {selectedItem ? (
-        <SplitSection
-          title={selectedItem.title}
-          controls={selectedItem.controls}
-          output={selectedItem.output}
-          generateButton={
-            <Button 
-              size="sm" 
-              className="rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600"
-            >
-              <Play className="h-4 w-4 mr-2" />
-              Generate
-            </Button>
-          }
-        />
+        selectedItem.component
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {quickHits.map((item) => (

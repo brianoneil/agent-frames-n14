@@ -34,7 +34,7 @@ export function SplitSection({ title, controls, output, generateButton }: SplitS
             </Button>
           </div>
         </div>
-        <div className="flex-1 space-y-4 overflow-y-auto">
+        <div className="flex-1 min-h-0">
           {controls}
         </div>
       </Card>
@@ -54,7 +54,7 @@ export function SplitSection({ title, controls, output, generateButton }: SplitS
             </Button>
           </div>
         </div>
-        <div className="flex-1 space-y-4 overflow-y-auto">
+        <div className="flex-1 min-h-0">
           {output}
         </div>
       </Card>
