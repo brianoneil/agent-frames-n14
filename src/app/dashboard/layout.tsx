@@ -9,7 +9,10 @@ import {
   FileCode,
   Activity,
   Settings,
-  ChevronDown
+  ChevronDown,
+  BookOpen,
+  MessageSquareCode,
+  Zap
 } from "lucide-react"
 import Image from "next/image"
 
@@ -29,27 +32,42 @@ const navItems: NavItem[] = [
   {
     title: "Dashboard",
     href: "/dashboard",
-    icon: <LayoutDashboard className="h-4 w-4" />,
+    icon: <LayoutDashboard className="h-5 w-5" />,
+  },
+  {
+    title: "Quick Hits",
+    href: "/dashboard/quick-hits",
+    icon: <Zap className="h-5 w-5" />,
   },
   {
     title: "Projects",
     href: "/dashboard/projects",
-    icon: <FolderKanban className="h-4 w-4" />,
+    icon: <FolderKanban className="h-5 w-5" />,
   },
   {
     title: "Templates",
     href: "/dashboard/templates",
-    icon: <FileCode className="h-4 w-4" />,
+    icon: <FileCode className="h-5 w-5" />,
+  },
+  {
+    title: "Prompts",
+    href: "/dashboard/prompts",
+    icon: <MessageSquareCode className="h-5 w-5" />,
+  },
+  {
+    title: "Guides",
+    href: "/dashboard/guides",
+    icon: <BookOpen className="h-5 w-5" />,
   },
   {
     title: "Activity",
     href: "/dashboard/activity",
-    icon: <Activity className="h-4 w-4" />,
+    icon: <Activity className="h-5 w-5" />,
   },
   {
     title: "Settings",
     href: "/dashboard/settings",
-    icon: <Settings className="h-4 w-4" />,
+    icon: <Settings className="h-5 w-5" />,
   },
 ]
 
