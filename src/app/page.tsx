@@ -40,7 +40,7 @@ export default function Home() {
               )}>
                 Get Started
               </Link>
-              <Link href="#" className={cn(
+              <Link href="/dashboard" className={cn(
                 buttonVariants({ size: "lg", variant: "outline" }),
                 "border-white/20 backdrop-blur-xl bg-white/10 hover:bg-white/20"
               )}>
