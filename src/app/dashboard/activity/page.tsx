@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from 'react'
-import { LoadingOverlay } from '@/components/loading-overlay'
+import { LoadingOverlay } from '@/components/ui/loading-overlay-rings'
 
 export default function ActivityPage() {
   const [isLoading, setIsLoading] = useState(true)

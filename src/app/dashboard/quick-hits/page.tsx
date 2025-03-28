@@ -37,6 +37,94 @@ function IdeaCleanUp() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const sampleIdeas = [
+    {
+      title: "Social Media App",
+      content: `# BookConnect: Social Reading Platform
+
+## Core Concept
+A social media platform that transforms reading from a solitary activity into a shared experience by connecting readers based on their literary preferences and reading habits.
+
+## Key Features
+* Real-time book progress sharing with friends
+* Highlight and share favorite quotes directly from e-books
+* Form book clubs with integrated video discussions
+* AI-powered book recommendations based on reading history
+
+## Target Audience
+* Avid readers aged 18-45
+* Book club organizers
+* Literature students and teachers
+* Reading challenge participants
+
+## Technical Considerations
+- Integration with major e-reader platforms
+- Privacy controls for sharing reading activity
+- Social graph management for reader connections
+- Mobile-first design with offline capabilities`
+    },
+    {
+      title: "Fitness Tracker",
+      content: `# QuestFit: RPG Fitness Adventure
+
+## Overview
+Transform daily workouts into an epic RPG adventure where every exercise contributes to character progression and unlocks new quests and achievements.
+
+## Game Mechanics
+* Character classes based on workout preferences
+  - Warrior (Strength Training)
+  - Ranger (Cardio)
+  - Monk (Flexibility/Yoga)
+  - Paladin (Mixed Fitness)
+
+## Progression System
+1. Experience points from completed workouts
+2. Skill trees for different exercise types
+3. Daily quests and seasonal events
+4. Guild system for group challenges
+
+## Health Integration
+- Heart rate monitoring for quest difficulty scaling
+- Sleep tracking affects character energy
+- Nutrition logging for bonus attributes
+- Recovery periods as story elements`
+    },
+    {
+      title: "Recipe Manager",
+      content: `# SmartChef: AI Kitchen Assistant
+
+## Primary Features
+1. Intelligent Inventory Management
+   * Automatic fridge inventory using smart cameras
+   * Expiration date tracking
+   * Shopping list generation
+
+## Recipe Intelligence
+- Dynamic recipe adaptation based on:
+  * Available ingredients
+  * Dietary restrictions
+  * Cooking skill level
+  * Kitchen equipment
+
+## Meal Planning
+* Weekly meal suggestions based on:
+  - Nutritional goals
+  - Time constraints
+  - Seasonal ingredients
+  - Budget considerations
+
+## Smart Kitchen Integration
+1. Connected device control
+2. Step-by-step cooking guidance
+3. Voice-activated recipe navigation
+4. Real-time cooking tips and substitutions`
+    }
+  ];
+
+  const handleSampleClick = (content: string) => {
+    setIdeaContent(content);
+  };
+
   const handleGenerate = async () => {
     if (!ideaContent.trim()) {
       setError("Please enter an idea to refine");
@@ -81,6 +169,20 @@ function IdeaCleanUp() {
         controls={
           <div className="flex flex-col h-full">
             <Label className="mb-2">Your Idea</Label>
+            <div className="mb-3 flex flex-wrap gap-2">
+              <p className="text-sm text-muted-foreground mb-2 w-full">Try these sample ideas:</p>
+              {sampleIdeas.map((idea) => (
+                <Button
+                  key={idea.title}
+                  variant="outline"
+                  size="sm"
+                  className="text-xs"
+                  onClick={() => handleSampleClick(idea.content)}
+                >
+                  {idea.title}
+                </Button>
+              ))}
+            </div>
             <div className="flex-1 min-h-0">
               <Textarea
                 value={ideaContent}
