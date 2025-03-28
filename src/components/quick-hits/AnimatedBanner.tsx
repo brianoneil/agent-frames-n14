@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { LucideIcon } from "lucide-react";
+import { LucideIcon, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface AnimatedBannerProps {
   icon: LucideIcon;
@@ -8,9 +9,18 @@ interface AnimatedBannerProps {
   gradient: string;
   isVisible: boolean;
   layoutId: string;
+  onClose: () => void;
 }
 
-export function AnimatedBanner({ icon: Icon, title, description, gradient, isVisible, layoutId }: AnimatedBannerProps) {
+export function AnimatedBanner({ 
+  icon: Icon, 
+  title, 
+  description, 
+  gradient, 
+  isVisible, 
+  layoutId,
+  onClose 
+}: AnimatedBannerProps) {
   return (
     <AnimatePresence mode="wait">
       {isVisible && (
@@ -26,8 +36,16 @@ export function AnimatedBanner({ icon: Icon, title, description, gradient, isVis
             mass: 0.8,
             duration: 0.5
           }}
-          className="w-full bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-6 mb-6"
+          className="w-full bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-6 mb-6 relative"
         >
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={onClose}
+            className="absolute right-4 top-4 rounded-full"
+          >
+            <X className="h-4 w-4" />
+          </Button>
           <div className="flex items-center gap-4">
             <motion.div 
               layout="position"
