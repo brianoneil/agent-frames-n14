@@ -94,13 +94,13 @@ Transform daily workouts into an epic RPG adventure where every exercise contrib
       content: `# SmartChef: AI Kitchen Assistant
 
 ## Primary Features
-1. Intelligent Inventory Management
-   * Automatic fridge inventory using smart cameras
-   * Expiration date tracking
-   * Shopping list generation
+* Intelligent Inventory Management
+  * Automatic fridge inventory using smart cameras
+  * Expiration date tracking
+  * Shopping list generation
 
 ## Recipe Intelligence
-- Dynamic recipe adaptation based on:
+* Dynamic recipe adaptation based on:
   * Available ingredients
   * Dietary restrictions
   * Cooking skill level
@@ -114,10 +114,10 @@ Transform daily workouts into an epic RPG adventure where every exercise contrib
   - Budget considerations
 
 ## Smart Kitchen Integration
-1. Connected device control
-2. Step-by-step cooking guidance
-3. Voice-activated recipe navigation
-4. Real-time cooking tips and substitutions`
+* Connected device control
+* Step-by-step cooking guidance
+* Voice-activated recipe navigation
+* Real-time cooking tips and substitutions`
     }
   ];
 
@@ -187,7 +187,7 @@ Transform daily workouts into an epic RPG adventure where every exercise contrib
               <Textarea
                 value={ideaContent}
                 onChange={(e) => setIdeaContent(e.target.value)}
-                className="h-full resize-none bg-gray-900/90 text-white placeholder:text-gray-400"
+                className="h-full resize-none bg-gray-900/90 text-white placeholder:text-gray-400 font-mono text-sm"
                 placeholder="Write your idea here..."
               />
             </div>
@@ -203,11 +203,26 @@ Transform daily workouts into an epic RPG adventure where every exercise contrib
               <div className="prose prose-sm max-w-none prose-invert">
                 <ReactMarkdown
                   components={{
-                    h1: ({ children }) => <h1 className="text-xl font-bold mb-3 text-white">{children}</h1>,
-                    h2: ({ children }) => <h2 className="text-lg font-semibold mb-2 text-white">{children}</h2>,
-                    p: ({ children }) => <p className="text-sm mb-3 text-gray-200">{children}</p>,
-                    ul: ({ children }) => <ul className="list-disc pl-5 mb-3 text-sm text-gray-200">{children}</ul>,
-                    li: ({ children }) => <li className="mb-1">{children}</li>,
+                    h1: ({ children }) => <h1 className="text-lg font-bold mb-2 text-white">{children}</h1>,
+                    h2: ({ children }) => <h2 className="text-base font-semibold mb-1.5 text-white">{children}</h2>,
+                    p: ({ children }) => <p className="text-xs mb-2 text-gray-200 leading-relaxed">{children}</p>,
+                    ul: ({ children }) => <ul className="list-disc pl-4 mb-2 text-xs text-gray-200 space-y-0.5">{children}</ul>,
+                    li: ({ children, className }) => {
+                      if (className?.includes('task-list-item')) {
+                        return (
+                          <li className="flex items-center gap-1.5 mb-0.5">
+                            <input 
+                              type="checkbox" 
+                              checked={className.includes('checked')}
+                              readOnly
+                              className="rounded border-gray-600 bg-gray-800 checked:bg-emerald-500"
+                            />
+                            <span>{children}</span>
+                          </li>
+                        );
+                      }
+                      return <li className="mb-0.5">{children}</li>;
+                    },
                   }}
                 >
                   {refinedContent}
